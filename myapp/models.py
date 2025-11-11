@@ -211,3 +211,21 @@ class Message(models.Model):
     def __str__(self):
         return self.name
 
+class ProjectSingleModel(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=200, blank=True, null=True)
+    image = models.ImageField(upload_to='ProjectSingle')
+    client = models.CharField(max_length=200, blank=True, null=True)
+    service = models.CharField(max_length=200, blank=True, null=True)
+    duration = models.CharField(max_length=200, blank=True, null=True)
+    des1 = models.CharField(max_length=200, blank=True, null=True)
+    des2 = models.CharField(max_length=200, blank=True, null=True)
+    keyFeature = models.JSONField(default=list, blank=True, null=True)  
+    image1 = models.ImageField(upload_to='ProjectSingle')
+    image2 = models.ImageField(upload_to='ProjectSingle')
+    technologies = models.JSONField(default=list, blank=True, null=True)  
+    project = models.ForeignKey(ProjectModel, on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.title

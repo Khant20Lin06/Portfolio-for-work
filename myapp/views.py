@@ -24,6 +24,7 @@ def HomePage(request):
     feedback = Feedback.objects.all().order_by('-created_at')
     workExperience = WorkExperience.objects.all()
     education = Education.objects.all()
+    ProjectSingle = ProjectSingleModel.objects.all()
     
     context = {
         'Position': Position,
@@ -42,6 +43,7 @@ def HomePage(request):
         'feedback': feedback,
         'workExperience': workExperience,
         'education': education,
+        'ProjectSingle': ProjectSingle,
     }
     return render(request, 'index.html', context)
 
@@ -69,3 +71,16 @@ def message(request):
         return redirect("homePage")
 
     return render(request, "index.html")
+
+def ProjectSinglePage(request,pk):
+    Position = PositionModel.objects.all()
+    Profile = ProfileModel.objects.all()
+    skill = Skill.objects.all()
+    ProjectSingle = get_object_or_404(ProjectSingleModel, project=pk)
+    context = {
+        'Position': Position,
+        'Profile': Profile,
+        'skill': skill,
+        'ProjectSingle': ProjectSingle,
+    }
+    return render(request, 'project-single.html', context)
