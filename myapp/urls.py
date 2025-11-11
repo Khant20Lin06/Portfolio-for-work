@@ -3,6 +3,7 @@ from .import views
 
 urlpatterns = [
     path('', views.HomePage, name="homePage"),
+    path('allProjectPage/', views.AllProjectPage, name="allProjectPage"),
     path('projectSingle/<uuid:pk>/', views.ProjectSinglePage, name="projectSinglePage"),
     path('message/', views.message, name='messagePage'),
 ]

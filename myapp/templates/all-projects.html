@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block body %}
+
+
+<!-- Main Content Start -->
+<div class="minfo__contentBox relative mx-auto max-w-container xl:max-2xl:max-w-65rem">
+
+    <!-- Portfolio Section Start -->
+    <div class="py-5 xl:py-3.5 max-w-content xl:max-2xl:max-w-50rem max-xl:mx-auto xl:ml-auto">
+
+        <div class="px-5 py-8 md:p-8 bg-white dark:bg-nightBlack rounded-2xl service-section lg:p-10 2xl:p-13">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 text-xs tracking-wide text-black dark:text-white border lg:px-5 section-name border-platinum dark:border-greyBlack200 rounded-4xl">
+                <i class="fal fa-tasks-alt text-theme"></i>
+                PORTFOLIO
+            </div>
+            <div class="mt-5 mb-8 md:my-10 section-title">
+                <h2
+                    class="title text-[32px] md:text-4xl lg:text-5xl font-extralight text-black dark:text-white leading-1.27">
+                    Featured <span class="font-semibold text-theme">Projects</span>
+                </h2>
+            </div><!--./section-title-->
+
+            <div class="portfolio_wrapper grid sm:grid-cols-2 gap-4 lg:gap-7.5 *:relative *:z-1">
+                {% for img in Project %}
+                {% if img.width > 500 %}
+                <div class="item md:col-span-2 group">
+                    <a href="{% url 'projectSinglePage' img.id %}"
+                        class="block p-3 overflow-hidden border md:p-4 rounded-xl border-platinum dark:border-greyBlack">
+                        <div class="img-wrapper">
+                            <img src="{{ img.image.url }}"
+                                class="rounded-lg max-md:h-[17rem] w-full max-md:object-cover max-md:object-center transition-all duration-300 group-hover:blur-xs"
+                                alt="{{ img.into1 }}">
+                            <div
+                                class="absolute inset-0 transition-all duration-300 opacity-0 overlay bg-gradient-to-t from-white dark:from-black to-transparent rounded-xl group-hover:opacity-100">
+                            </div>
+                        </div>
+                        <div
+                            class="info text-center position-center max-lg:text-3xl text-lead font-semibold text-black dark:text-white leading-1.15 transition duration-500 scale-110 opacity-0 group-hover:scale-100 group-hover:opacity-100 relative z-10">
+                            {{ img.into1 }}
+                            <span>
+                                {{ img.into2 }}
+                            </span>
+                        </div>
+                    </a>
+                    <ul
+                        class="absolute z-10 transition-all duration-500 opacity-0 md:top-9 md:right-9 top-6 right-6 group-hover:opacity-100">
+                        <li>
+                            <a href="#"
+                                class="inline-flex items-center gap-2 px-5 py-3 text-sm font-light leading-none text-white transition-colors bg-metalBlack rounded-3xl hover:text-theme">
+                                {{ img.brand }}
+                            </a>
+                        </li>
+                    </ul>
+                </div><!--./portfolio-card-->
+                {% else %}
+                <div class="item md:col-span-1 group">
+                    <a href="{% url 'projectSinglePage' img.id %}"
+                        class="block p-3 overflow-hidden border md:p-4 rounded-xl border-platinum dark:border-greyBlack">
+                        <div class="img-wrapper">
+                            <img src="{{ img.image.url }}"
+                                class="rounded-lg max-md:h-[17rem] w-full max-md:object-cover max-md:object-center transition-all duration-300 group-hover:blur-xs"
+                                alt="{{ img.into1 }}">
+                            <div
+                                class="absolute inset-0 transition-all duration-300 opacity-0 overlay bg-gradient-to-t from-white dark:from-black to-transparent rounded-xl group-hover:opacity-100">
+                            </div>
+                        </div>
+                        <div
+                            class="info text-center position-center max-lg:text-3xl text-lead font-semibold text-black dark:text-white leading-1.15 transition duration-500 scale-110 opacity-0 group-hover:scale-100 group-hover:opacity-100 relative z-10">
+                            {{ img.into1 }}
+                            <span>
+                                {{ img.into2 }}
+                            </span>
+                        </div>
+                    </a>
+                    <ul
+                        class="absolute z-10 transition-all duration-500 opacity-0 md:top-9 md:right-9 top-6 right-6 group-hover:opacity-100">
+                        <li>
+                            <a href="#"
+                                class="inline-flex items-center gap-2 px-5 py-3 text-sm font-light leading-none text-white transition-colors bg-metalBlack rounded-3xl hover:text-theme">
+                                {{ img.brand }}
+                            </a>
+                        </li>
+                    </ul>
+                </div><!--./portfolio-card-->
+                {% endif %}
+                {% endfor %}
+            </div>
+
+
+            <!-- Pagination Starts  -->
+            <div class="mt-10 text-center md:mt-13 flex items-center justify-center flex-wrap">
+                <div
+                    class="pagination flex-center gap-2 lg:gap-4 *:w-10 *:h-10 *:inline-flex *:items-center *:justify-center *:border *:border-platinum *:dark:border-greyBlack *:rounded-full *:transition-all ">
+        {% if Project.has_previous %}
+                    <a href="?page={{ Project.previous_page_number }}"
+                        class="prev hover:bg-theme hover:border-theme hover:text-white [&.active]:bg-theme [&.active]:text-white">
+                        <svg class="w-4" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M20.5738 7.75879L0.761719 7.75879M0.761719 7.75879L7.3501 1.17041M0.761719 7.75879L7.3501 14.3472"
+                                stroke="currentcolor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </a>
+        {% endif %}
+
+        
+        {% for num in Project.paginator.page_range %}
+            {% if Project.number == num %}
+                    <a href="?page={{ num }}"
+                        class="active hover:bg-theme hover:border-theme hover:text-white [&.active]:bg-theme [&.active]:text-white">{{ num }}</a>
+            {% else %}
+                    <a href="?page={{ num }}"
+                        class="hover:bg-theme hover:border-theme hover:text-white [&.active]:bg-theme [&.active]:text-white">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+                    
+        {% if Project.has_next %}
+                    <a href="?page={{ Project.next_page_number }}"
+                        class="next hover:bg-theme hover:border-theme hover:text-white [&.active]:bg-theme [&.active]:text-white">
+                        <svg class="w-4" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.19961 7.75879L21.0117 7.75879M21.0117 7.75879L14.4233 1.17041M21.0117 7.75879L14.4233 14.3472"
+                                stroke="currentcolor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </a>
+        {% endif %}
+                </div>
+            </div>
+            <!-- Pagination Ends  -->
+
+        </div>
+
+    </div>
+    <!-- Portfolio Section End -->
+
+
+</div>
+
+
+{% endblock %}

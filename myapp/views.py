@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .utils import alarm
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -84,3 +85,21 @@ def ProjectSinglePage(request,pk):
         'ProjectSingle': ProjectSingle,
     }
     return render(request, 'project-single.html', context)
+
+def AllProjectPage(request):
+    Position = PositionModel.objects.all()
+    Profile = ProfileModel.objects.all()
+    skill = Skill.objects.all()
+    ProjectSingle = ProjectSingleModel.objects.all()
+    Project = ProjectModel.objects.all().order_by('-created_at')
+    paginator = Paginator(Project, 4)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'Position': Position,
+        'Profile': Profile,
+        'skill': skill,
+        'Project': page_obj,
+        'ProjectSingle': ProjectSingle,
+    }
+    return render(request, 'all-projects.html', context)
